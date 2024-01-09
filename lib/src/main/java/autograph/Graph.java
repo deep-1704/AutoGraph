@@ -6,33 +6,29 @@ import java.util.List;
 import autograph.Util.CustomException;
 import autograph.Util.Pair;
 
-public class Graph<Node> {
+public class Graph {
     public Boolean isDirected;
-    private List<Node> nodes;
+    private int nodeCount;
     private List<List<Pair<Integer,Integer>>> adjacencyList;
 
     public List<List<Pair<Integer,Integer>>> getAdjacencyList() {
         return adjacencyList;
     }
 
-    public List<Node> getNodes() {
-        return nodes;
-    }
-
     public Graph(Boolean isDirected){
         this.isDirected = isDirected;
-        this.nodes = new ArrayList<>(0);
-        this.adjacencyList = new ArrayList<>(0);
+        this.adjacencyList = new ArrayList<>();
     }
-    public Graph(List<Node> nodes,Boolean isDirected){
+    public Graph(int totalNodes, Boolean isDirected){
         this.isDirected = isDirected;
-        this.nodes = nodes;
-        this.adjacencyList = new ArrayList<>(nodes.size());
+        this.nodeCount = totalNodes;
+        this.adjacencyList = new ArrayList<>();
+        for(int i = 0;i<totalNodes;i++) adjacencyList.add(new ArrayList<>(0));
     }
 
     public void addEdge (int node1, int node2){
         try{
-            if((node1 >= nodes.size()) || (node2 >= nodes.size()) || (node1 < 0) || (node2 < 0)){
+            if((node1 >= nodeCount) || (node2 >= nodeCount) || (node1 < 0) || (node2 < 0)){
                 throw new CustomException("Index out of bounds");
             }
         }catch (CustomException exception){
@@ -44,11 +40,10 @@ public class Graph<Node> {
         if(!isDirected){
             adjacencyList.get(node2).add(new Pair<>(node1,1));
         }
-
     }
     public void addEdge (int node1, int node2,int weight){
         try{
-            if((node1 >= nodes.size()) || (node2 >= nodes.size()) || (node1 < 0) || (node2 < 0)){
+            if((node1 >= nodeCount) || (node2 >= nodeCount) || (node1 < 0) || (node2 < 0)){
                 throw new CustomException("Index out of bounds");
             }
         }catch (CustomException exception){
@@ -60,9 +55,8 @@ public class Graph<Node> {
             adjacencyList.get(node2).add(new Pair<>(node1,weight));
         }
     }
-    public void addNode(Node node){
-        nodes.add(node);
-        adjacencyList.add(new ArrayList<>(0));
+    public void addNode(){
+        adjacencyList.add(new ArrayList<>());
     }
 
 }

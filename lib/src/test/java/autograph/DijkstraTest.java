@@ -1,9 +1,10 @@
 package autograph;
 
-import autograph.Algorithm.BFS;
 import autograph.Algorithm.dijkstra;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,12 +25,9 @@ public class DijkstraTest {
         graph.addEdge(5,6);
         graph.addEdge(6,7);
 
-        List<Integer> sp = BFS.getShortestPathsFromSource(graph,0);
-        assertThat(sp.get(7)).isEqualTo(2);
-        assertThat(sp.get(1)).isEqualTo(1);
-        assertThat(sp.get(2)).isEqualTo(2);
-        assertThat(sp.get(3)).isEqualTo(1);
-        assertThat(sp.get(4)).isEqualTo(2);
+        List<Integer> sp = dijkstra.getShortestPathsFromSource(graph,0);
+        List<Integer> spCheck = new ArrayList<>(Arrays.asList(0,1,2,1,2,3,3,2));
+        assertThat(sp).isEqualTo(spCheck);
 
 //        TC-02
         Graph graph2 = new Graph(9,false);
@@ -49,8 +47,7 @@ public class DijkstraTest {
         graph2.addEdge(7,8,7);
 
         List<Integer> sp2 = dijkstra.getShortestPathsFromSource(graph2,0);
-        assertThat(sp2.get(1)).isEqualTo(4);
-        assertThat(sp2.get(2)).isEqualTo(12);
-        assertThat(sp2.get(4)).isEqualTo(21);
+        List<Integer> sp2Check = new ArrayList<>(Arrays.asList(0,4,12,19,21,11,9,8,14));
+        assertThat(sp2).isEqualTo(sp2Check);
     }
 }

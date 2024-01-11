@@ -11,6 +11,10 @@ public class Graph {
     private int nodeCount;
     private List<List<Pair<Integer,Integer>>> adjacencyList;
 
+    public int getNodeCount() {
+        return nodeCount;
+    }
+
     public List<List<Pair<Integer,Integer>>> getAdjacencyList() {
         return adjacencyList;
     }
@@ -58,5 +62,4 @@ public class Graph {
     public void addNode(){
         adjacencyList.add(new ArrayList<>());
     }
-
 }

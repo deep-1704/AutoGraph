@@ -37,7 +37,7 @@ public class Graph {
             }
         }catch (CustomException exception){
             exception.printStackTrace();
-            return;
+            System.exit(0);
         }
 
         adjacencyList.get(node1).add(new Pair<>(node2,1));
@@ -52,7 +52,7 @@ public class Graph {
             }
         }catch (CustomException exception){
             exception.printStackTrace();
-            return;
+            System.exit(0);
         }
         adjacencyList.get(node1).add(new Pair<>(node2,weight));
         if(!isDirected){

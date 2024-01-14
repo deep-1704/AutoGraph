@@ -10,6 +10,11 @@ public class Graph {
     public Boolean isDirected;
     private int nodeCount;
     private List<List<Pair<Integer,Integer>>> adjacencyList;
+    private List<Pair<Pair<Integer,Integer>,Integer>> edgeList;
+
+    public List<Pair<Pair<Integer, Integer>, Integer>> getEdgeList() {
+        return edgeList;
+    }
 
     public int getNodeCount() {
         return nodeCount;
@@ -22,10 +27,12 @@ public class Graph {
     public Graph(Boolean isDirected){
         this.isDirected = isDirected;
         this.adjacencyList = new ArrayList<>();
+        this.edgeList = new ArrayList<>();
     }
     public Graph(int totalNodes, Boolean isDirected){
         this.isDirected = isDirected;
         this.nodeCount = totalNodes;
+        this.edgeList = new ArrayList<>();
         this.adjacencyList = new ArrayList<>();
         for(int i = 0;i<totalNodes;i++) adjacencyList.add(new ArrayList<>(0));
     }
@@ -40,6 +47,7 @@ public class Graph {
             System.exit(0);
         }
 
+        edgeList.add(new Pair<>(new Pair<>(node1,node2),1));
         adjacencyList.get(node1).add(new Pair<>(node2,1));
         if(!isDirected){
             adjacencyList.get(node2).add(new Pair<>(node1,1));
@@ -54,6 +62,8 @@ public class Graph {
             exception.printStackTrace();
             System.exit(0);
         }
+
+        edgeList.add(new Pair<>(new Pair<>(node1,node2),weight));
         adjacencyList.get(node1).add(new Pair<>(node2,weight));
         if(!isDirected){
             adjacencyList.get(node2).add(new Pair<>(node1,weight));

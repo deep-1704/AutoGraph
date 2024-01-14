@@ -47,6 +47,52 @@ public class minSpanningTree {
         }
         return mst;
     }
+
+    public static Graph kruskalAlgo(Graph graph){
+
+//        Check if the graph is connected
+        try{
+            if(!DFS.isConnected(graph)){
+                throw new CustomException("Graph is disconnected.");
+            }
+        }catch (CustomException e){
+            e.printStackTrace();
+            System.exit(0);
+        }
+
+        int n = graph.getNodeCount();
+        Graph mst = new Graph(n,false);
+
+//        Utils
+        List<Pair<Pair<Integer,Integer>,Integer>> edges = graph.getEdgeList();
+        int[] parent = new int[n];
+
+        for(int i = 0;i<n;i++) parent[i] = i;
+        edges.sort(new edgeWeightComparator());
+
+        int edgeCount = 0,itr = 0;
+        while(edgeCount < (n-1)){
+            int p1 = findParent(parent, edges.get(itr).first.first);
+            int p2 = findParent(parent, edges.get(itr).first.second);
+            if(p1 != p2){
+//                Update MST
+                mst.addEdge(edges.get(itr).first.first,edges.get(itr).first.second,edges.get(itr).second);
+//                Update parents
+                parent[p1] = p2; // It's 11 in the night. I'm about to die(Not literally). Somebody please make a PR to take heights of individual union into consideration.
+                                 // Just kidding. I'll do it later ;]
+//                Update variables
+                edgeCount++;
+            }
+            itr++;
+        }
+
+        return mst;
+    }
+//    KruskalUtil
+    private static int findParent(int[] parent, int u){
+        if(parent[u] == u) return u;
+        return findParent(parent,parent[u]);
+    }
 }
 class edgeWeightComparator implements Comparator<Pair<Pair<Integer,Integer>,Integer>> {
     @Override

@@ -3,6 +3,7 @@ package autograph;
 import java.util.ArrayList;
 import java.util.List;
 
+import autograph.Algorithm.BFS;
 import autograph.Util.CustomException;
 import autograph.Util.Pair;
 
@@ -71,5 +72,11 @@ public class Graph {
     }
     public void addNode(){
         adjacencyList.add(new ArrayList<>());
+    }
+
+//    Some utility methods ::
+
+    public Boolean isBipartite(){
+        return BFS.isBipartite(this);
     }
 }

@@ -25,8 +25,8 @@ public class DijkstraTest {
         graph.addEdge(5,6);
         graph.addEdge(6,7);
 
-        List<Integer> sp = dijkstra.getShortestPathsFromSource(graph,0);
-        List<Integer> spCheck = new ArrayList<>(Arrays.asList(0,1,2,1,2,3,3,2));
+        int[] sp = dijkstra.getShortestPathsFromSource(graph,0);
+        int[] spCheck = {0,1,2,1,2,3,3,2};
         assertThat(sp).isEqualTo(spCheck);
 
 //        TC-02
@@ -46,8 +46,8 @@ public class DijkstraTest {
         graph2.addEdge(6,7,1);
         graph2.addEdge(7,8,7);
 
-        List<Integer> sp2 = dijkstra.getShortestPathsFromSource(graph2,0);
-        List<Integer> sp2Check = new ArrayList<>(Arrays.asList(0,4,12,19,21,11,9,8,14));
+        int[] sp2 = dijkstra.getShortestPathsFromSource(graph2,0);
+        int[] sp2Check = {0,4,12,19,21,11,9,8,14};
         assertThat(sp2).isEqualTo(sp2Check);
     }
 }

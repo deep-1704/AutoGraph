@@ -23,12 +23,12 @@ public class BFSTest {
         graph.addEdge(5,6);
         graph.addEdge(6,7);
 
-        List<Integer> sp = BFS.getShortestPathsFromSource(graph,0);
-        assertThat(sp.get(7)).isEqualTo(2);
-        assertThat(sp.get(1)).isEqualTo(1);
-        assertThat(sp.get(2)).isEqualTo(2);
-        assertThat(sp.get(3)).isEqualTo(1);
-        assertThat(sp.get(4)).isEqualTo(2);
+        int[] sp = BFS.getShortestPathsFromSource(graph,0);
+        assertThat(sp[7]).isEqualTo(2);
+        assertThat(sp[1]).isEqualTo(1);
+        assertThat(sp[2]).isEqualTo(2);
+        assertThat(sp[3]).isEqualTo(1);
+        assertThat(sp[4]).isEqualTo(2);
     }
 
 }

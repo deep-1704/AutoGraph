@@ -17,13 +17,13 @@ public class FWTest {
         graph.addEdge(2,3,1);
         graph.addEdge(0,3,10);
 
-        List<List<Integer>> sp = floydWarshall.getAllPairsShortestPaths(graph);
-        List<List<Integer>> spCheck = new ArrayList<>();
+        int[][] sp = floydWarshall.getAllPairsShortestPaths(graph);
+        int[][]spCheck = new int[4][4];
 
-        spCheck.add(new ArrayList<>(Arrays.asList(0,5,8,9)));
-        spCheck.add(new ArrayList<>(Arrays.asList(Integer.MAX_VALUE,0,3,4)));
-        spCheck.add(new ArrayList<>(Arrays.asList(Integer.MAX_VALUE,Integer.MAX_VALUE,0,1)));
-        spCheck.add(new ArrayList<>(Arrays.asList(Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,0)));
+        spCheck[0] = new int[]{0, 5, 8, 9};
+        spCheck[1] = new int[]{Integer.MAX_VALUE,0,3,4};
+        spCheck[2] = new int[]{Integer.MAX_VALUE,Integer.MAX_VALUE,0,1};
+        spCheck[3] = new int[]{Integer.MAX_VALUE,Integer.MAX_VALUE,Integer.MAX_VALUE,0};
 
         assertThat(sp).isEqualTo(spCheck);
     }

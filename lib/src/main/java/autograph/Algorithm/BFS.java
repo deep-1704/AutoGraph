@@ -6,14 +6,14 @@ import autograph.Util.Pair;
 import java.util.*;
 
 public class BFS {
-    public static List<Integer> getShortestPathsFromSource(Graph graph, int src){
+    public static int[] getShortestPathsFromSource(Graph graph, int src){
         List<List<Pair<Integer,Integer>>> adjacencyList = graph.getAdjacencyList();
         int n = adjacencyList.size();
 
 //        Initialize result
-        List<Integer> shortestPath = new ArrayList<>();
-        for(int i = 0;i<n;i++) shortestPath.add(-1);
-        shortestPath.set(src,0);
+        int[] shortestPath = new int[n];
+        Arrays.fill(shortestPath,Integer.MAX_VALUE);
+        shortestPath[src] = 0;
 
 //        Algorithm
         Boolean[] visited = new Boolean[n];
@@ -27,7 +27,7 @@ public class BFS {
             for(Pair<Integer,Integer> nei:adjacencyList.get(s)){
                 if(!visited[nei.first]){
                     visited[nei.first] = true;
-                    shortestPath.set(nei.first, shortestPath.get(s)+1);
+                    shortestPath[nei.first] = shortestPath[s]+1;
                     q.add(nei.first);
                 }
             }

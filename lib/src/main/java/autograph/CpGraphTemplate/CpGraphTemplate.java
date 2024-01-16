@@ -66,14 +66,14 @@ class Graph {
     }
 }
 class BFS {
-    public static List<Integer> getShortestPathsFromSource(Graph graph, int src){
+    public static int[] getShortestPathsFromSource(Graph graph, int src){
         List<List<Pair<Integer,Integer>>> adjacencyList = graph.getAdjacencyList();
         int n = adjacencyList.size();
 
 //        Initialize result
-        List<Integer> shortestPath = new ArrayList<>();
-        for(int i = 0;i<n;i++) shortestPath.add(-1);
-        shortestPath.set(src,0);
+        int[] shortestPath = new int[n];
+        Arrays.fill(shortestPath,Integer.MAX_VALUE);
+        shortestPath[src] = 0;
 
 //        Algorithm
         Boolean[] visited = new Boolean[n];
@@ -87,7 +87,7 @@ class BFS {
             for(Pair<Integer,Integer> nei:adjacencyList.get(s)){
                 if(!visited[nei.first]){
                     visited[nei.first] = true;
-                    shortestPath.set(nei.first, shortestPath.get(s)+1);
+                    shortestPath[nei.first] = shortestPath[s]+1;
                     q.add(nei.first);
                 }
             }
@@ -96,14 +96,14 @@ class BFS {
     }
 }
 class dijkstra {
-    public static List<Integer> getShortestPathsFromSource(Graph graph, int src){
+    public static int[] getShortestPathsFromSource(Graph graph, int src){
         List<List<Pair<Integer,Integer>>> adjacencyList = graph.getAdjacencyList();
         int n = adjacencyList.size();
 
 //        Initialize result
-        List<Integer> shortestPath = new ArrayList<>();
-        for(int i = 0;i<n;i++) shortestPath.add(Integer.MAX_VALUE);
-        shortestPath.set(src,0);
+        int[] shortestPath = new int[n];
+        Arrays.fill(shortestPath,Integer.MAX_VALUE);
+        shortestPath[src] = 0;
 
 //        Algorithm
         Boolean[] visited = new Boolean[n];
@@ -115,9 +115,9 @@ class dijkstra {
             Pair<Integer,Integer> p = pq.remove();
             if(visited[p.first]) continue;
             for(Pair<Integer,Integer> nei:adjacencyList.get(p.first)){
-                if((!visited[nei.first]) && (shortestPath.get(nei.first) > (p.second + nei.second))){
-                    shortestPath.set(nei.first,p.second + nei.second);
-                    pq.add(new Pair<>(nei.first, shortestPath.get(nei.first)));
+                if((!visited[nei.first]) && (shortestPath[nei.first] > (p.second + nei.second))){
+                    shortestPath[nei.first] = p.second + nei.second;
+                    pq.add(new Pair<>(nei.first, shortestPath[nei.first]));
                 }
             }
             visited[p.first] = true;
@@ -254,22 +254,17 @@ class DFS {
     }
 }
 class floydWarshall {
-    public static List<List<Integer>> getAllPairsShortestPaths(Graph graph){
+    public static int[][] getAllPairsShortestPaths(Graph graph){
         List<List<Pair<Integer,Integer>>> adjacencyList = graph.getAdjacencyList();
         int n = adjacencyList.size();
 
 //        Initializing results
-        List<List<Integer>> sp = new ArrayList<>();
+        int[][] sp = new int[n][n];
+        for(int i = 0;i<n;i++) Arrays.fill(sp[i],Integer.MAX_VALUE);
         for(int i = 0;i<n;i++){
-            sp.add(new ArrayList<>());
-            for(int j = 0;j<n;j++) {
-                if(i == j) sp.get(i).add(0);
-                else sp.get(i).add(Integer.MAX_VALUE);
-            }
-        }
-        for(int i = 0;i<n;i++){
+            sp[i][i] = 0;
             for(Pair<Integer,Integer> p:adjacencyList.get(i)){
-                sp.get(i).set(p.first,p.second);
+                sp[i][p.first] = p.second;
             }
         }
 
@@ -277,12 +272,12 @@ class floydWarshall {
         for(int k = 0;k<n;k++){
             for(int i = 0;i<n;i++){
                 for(int j = 0;j<n;j++){
-                    if((sp.get(i).get(k) != Integer.MAX_VALUE)
-                            && (sp.get(k).get(j) != Integer.MAX_VALUE)
-                            && (sp.get(i).get(j) > (sp.get(i).get(k) + sp.get(k).get(j)))){
+                    if((sp[i][k] != Integer.MAX_VALUE)
+                            && (sp[k][j] != Integer.MAX_VALUE)
+                            && (sp[i][j] > (sp[i][k] + sp[k][j]))){
 
 //                        Update the distance
-                        sp.get(i).set(j,sp.get(i).get(k) + sp.get(k).get(j));
+                        sp[i][j] = sp[i][k]+sp[k][j];
                     }
                 }
             }

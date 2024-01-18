@@ -66,8 +66,10 @@ public class minSpanningTree {
 //        Utils
         List<Pair<Pair<Integer,Integer>,Integer>> edges = graph.getEdgeList();
         int[] parent = new int[n];
+        int[] rank = new int[n];
 
         for(int i = 0;i<n;i++) parent[i] = i;
+        Arrays.fill(rank,1);
         edges.sort(new edgeWeightComparator());
 
         int edgeCount = 0,itr = 0;
@@ -77,10 +79,20 @@ public class minSpanningTree {
             if(p1 != p2){
 //                Update MST
                 mst.addEdge(edges.get(itr).first.first,edges.get(itr).first.second,edges.get(itr).second);
-//                Update parents
-                parent[p1] = p2; // It's 11 in the night. I'm about to die(Not literally). Somebody please make a PR to take heights of individual union into consideration.
-                                 // Just kidding. I'll do it later ;]
-//                Update variables
+
+//                Update parents and union-heights
+                if(rank[p1] > rank[p2]){
+                    parent[p2] = p1;
+                }
+                else if(rank[p1] < rank[p2]){
+                    parent[p1] = p2;
+                }
+                else{
+                    parent[p2] = p1;
+                    rank[p1]++;
+                }
+
+//                Update edge-count
                 edgeCount++;
             }
             itr++;

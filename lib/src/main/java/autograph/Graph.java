@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autograph.Algorithm.BFS;
+import autograph.Algorithm.DFS;
 import autograph.Util.CustomException;
 import autograph.Util.Pair;
 
@@ -78,5 +79,9 @@ public class Graph {
 
     public Boolean isBipartite(){
         return BFS.isBipartite(this);
+    }
+
+    public Boolean isConnected(){
+        return DFS.isConnected(this);
     }
 }

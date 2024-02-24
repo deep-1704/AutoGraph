@@ -84,6 +84,7 @@ public class BFS {
 
         List<List<Pair<Integer,Integer>>> adj = graph.getAdjacencyList();
         visited = new Boolean[n];
+        Arrays.fill(visited, false);
 
         for(int i = 0;i<n;i++){
             if(!visited[i]){

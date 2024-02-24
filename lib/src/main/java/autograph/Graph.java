@@ -84,4 +84,8 @@ public class Graph {
     public Boolean isConnected(){
         return DFS.isConnected(this);
     }
+
+    public int getNonTrivialComponents(){
+        return BFS.getNonTrivialComponents(this);
+    }
 }

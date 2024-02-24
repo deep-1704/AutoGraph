@@ -74,4 +74,43 @@ public class BFS {
             }
         }
     }
+
+    public static int getNonTrivialComponents(Graph graph){
+        if(graph.getNodeCount() == 0) return 0;
+        if(graph.isDirected) return -1;
+
+        int nonTrivialComponents = 0, visitCount;
+        int n = graph.getNodeCount();
+
+        List<List<Pair<Integer,Integer>>> adj = graph.getAdjacencyList();
+        visited = new Boolean[n];
+
+        for(int i = 0;i<n;i++){
+            if(!visited[i]){
+                visitCount = traverse(i, adj);
+                if(visitCount > 1) nonTrivialComponents++;
+            }
+        }
+
+        return nonTrivialComponents;
+    }
+    private static int traverse(int src, List<List<Pair<Integer,Integer>>> adj){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        visited[src] = true;
+        int visitCount = 1;
+
+        while(!q.isEmpty()){
+            int s = q.remove();
+            for(Pair<Integer,Integer> nei:adj.get(s)){
+                if(!visited[nei.first]){
+                    visited[nei.first] = true;
+                    visitCount++;
+                    q.add(nei.first);
+                }
+            }
+        }
+
+        return visitCount;
+    }
 }
